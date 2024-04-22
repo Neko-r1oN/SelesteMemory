@@ -13,10 +13,7 @@ public class ProjectName : MonoBehaviour
     [Header("スタートカラー")]
     [SerializeField]
     Color32 startColor = new Color32(255, 255, 255, 0);
-    //ループ終了(折り返し)時の色を0～255までの整数で指定。
-    [Header("エンドカラー")]
-    [SerializeField]
-    Color32 endColor = new Color32(255, 255, 255, 255);
+   
 
     void Start()
     {
@@ -35,11 +32,11 @@ public class ProjectName : MonoBehaviour
 
         if (timer >= 3.0f)
         {
-            nameTxt.color = Color.Lerp(nameTxt.color, new Color(0, 0, 0, -), 3.0f * Time.deltaTime);
+            nameTxt.color = Color.Lerp(nameTxt.color, new Color(0, 0, 0, -3), 2.0f * Time.deltaTime);
             
         }
     }
 
-   
+  
 
 }

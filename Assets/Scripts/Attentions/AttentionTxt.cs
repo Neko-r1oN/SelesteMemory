@@ -41,7 +41,7 @@ public class AttentionText : MonoBehaviour
 
             if (timer >= 7.0f)
             {
-                AttentionTxt.color = Color.Lerp(AttentionTxt.color, new Color(0, 0, 0, -3), 3.0f * Time.deltaTime);
+                AttentionTxt.color = Color.Lerp(AttentionTxt.color, new Color(0, 0, 0, -3), 2.0f * Time.deltaTime);
                 Invoke("StartTitleScene", 1.0f);
             }
         }
@@ -50,7 +50,7 @@ public class AttentionText : MonoBehaviour
     public void StartTitleScene()
     {
         // ÉVÅ[ÉìëJà⁄
-        Initiate.Fade("TitleScene", new Color(0, 0, 0, 0), 0.0f);
+        Initiate.Fade("TitleScene", new Color(0,0, 0, 0), 2.0f);
     }
 
 }
