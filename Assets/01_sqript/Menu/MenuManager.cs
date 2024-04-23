@@ -16,12 +16,6 @@ public class MenuManager : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     public void OpenOptionAnim()
     {
         //menu.SetActive(true);
