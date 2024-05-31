@@ -35,6 +35,8 @@ public class UITransition : MonoBehaviour
 
     // フェード設定値.
     [SerializeField] TransitionParam fade = new TransitionParam();
+    // スケール設定値.
+    [SerializeField] TransitionParam scale = new TransitionParam() { IsActive = false, In = Vector2.zero, Out = Vector2.zero };
     // 遷移時間.
     [SerializeField] float duration = 1f;
 
@@ -87,6 +89,17 @@ public class UITransition : MonoBehaviour
                 .SetLink(gameObject)
             );
         }
+        if (scale.IsActive == true)
+        {
+            var current = Rect.transform.localScale;
+            Rect.transform.localScale = new Vector3(scale.In.x, scale.In.y, current.z);
+
+            inSequence.Join
+            (
+                Rect.DOScale(current, duration)
+                .SetLink(gameObject)
+            );
+        }
 
         inSequence
         .SetLink(gameObject)
@@ -113,6 +126,17 @@ public class UITransition : MonoBehaviour
             (
                 Canvas.DOFade(fade.Out.y, duration)
                 .SetLink(gameObject)
+            );
+        }
+
+        if (scale.IsActive == true)
+        {
+            var current = Rect.transform.localScale;
+            outSequence.Join
+            (
+                Rect.DOScale(new Vector3(scale.Out.x, scale.Out.y, current.z), duration)
+                .SetLink(gameObject)
+                .OnComplete(() => Rect.transform.localScale = current)
             );
         }
 

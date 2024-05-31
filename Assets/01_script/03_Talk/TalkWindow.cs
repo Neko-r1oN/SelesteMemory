@@ -36,7 +36,7 @@ public class TalkWindow : MonoBehaviour
     // 会話内容テキスト.
     [SerializeField] Text talkText = null;
     // 会話のトランジション.
-    //[SerializeField] UITransition talkWindowTransition = null;
+    [SerializeField] UITransition talkWindowTransition = null;
     // 次ページへ表示画像.
     [SerializeField] Image nextArrow = null;
     // 会話パラメータリスト.
@@ -50,16 +50,41 @@ public class TalkWindow : MonoBehaviour
     bool isSkip = false;
 
 
-    void Start()
+   
+    async void Start()
     {
         // テスト用会話開始.(後で消します)
-        TalkStart(talks);
+        await Open();
+        await TalkStart(talks);
+        await Close();
+        Debug.Log("テスト終了");
+    }
+
+    // -----------------------------------------------------------------
+    // ウインドウを開く.
+    // -----------------------------------------------------------------
+    public async UniTask Open(string initName = "", string initText = "")
+    {
+        nameText.text = initName;
+        talkText.text = initText;
+        nextArrow.gameObject.SetActive(false);
+        talkWindowTransition.gameObject.SetActive(true);
+        await talkWindowTransition.TransitionInWait();
+    }
+
+    // -----------------------------------------------------------------
+    // ウインドウを閉じる.
+    // -----------------------------------------------------------------
+    public async UniTask Close()
+    {
+        await talkWindowTransition.TransitionOutWait();
+        talkWindowTransition.gameObject.SetActive(false);
     }
 
     // -----------------------------------------------------------------
     // 会話の開始.
     // -----------------------------------------------------------------
-    public async UniTask TalkStart(List<StoryData> talkList, float wordInterval = 0.2f)
+    public async UniTask TalkStart(List<StoryData> talkList, float wordInterval = 0.05f)
     {
         foreach (var talk in talkList)
         {
