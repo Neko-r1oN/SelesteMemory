@@ -451,24 +451,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13857473dbdd6048aab6ec6b5939031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: bd0f56f9fc9e8da48b354a60abefafbe, type: 2}
   nameText: {fileID: 1403764769}
   talkText: {fileID: 552576666}
   talkWindowTransition: {fileID: 1365334875}
   nextArrow: {fileID: 1886824773}
   talks:
-  - Name: a
+  - Name: 1
     Talk: "\u30C6\u30AD\u30B9\u30C8\uFF11\u3070\u3093\u3081\u3060\u3088"
     Place: 
     Left: 
     Center: 
     Right: 
-  - Name: b
+  - Name: 2
     Talk: "\u30C6\u30AD\u30B9\u30C8\uFF12\u3070\u3093\u3081\u3060\u3088"
     Place: 
     Left: 
     Center: 
     Right: 
-  - Name: c
+  - Name: 6
     Talk: "\u30C6\u30AD\u30B9\u30C8\uFF13\u3070\u3093\u3081\u3060\u3088"
     Place: 
     Left: 

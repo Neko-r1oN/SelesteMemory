@@ -12,6 +12,7 @@ public class TalkWindow : MonoBehaviour
     // 会話パラメータ.
     // -----------------------------------------------------------------
     [System.Serializable]
+    
     public class StoryData
     {
         // キャラ.
@@ -27,6 +28,9 @@ public class TalkWindow : MonoBehaviour
         // 右キャラ.
         public string Right = "";
     }
+
+    // キャラデータ.
+    [SerializeField] CharacterData data = null;
 
     // -----------------------------------------------------------------
     // テキスト変数
@@ -88,7 +92,8 @@ public class TalkWindow : MonoBehaviour
     {
         foreach (var talk in talkList)
         {
-            nameText.text = talk.Name;
+            //nameText.text = talk.Name;
+            nameText.text = data.GetCharacterName(talk.Name);
             talkText.text = "";
             goToNextPage = false;
             currentPageCompleted = false;
