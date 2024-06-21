@@ -6,6 +6,8 @@ using System.Threading;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 
+
+
 [RequireComponent(typeof(CanvasGroup))]
 public class UITransition : MonoBehaviour
 {
@@ -89,6 +91,7 @@ public class UITransition : MonoBehaviour
                 .SetLink(gameObject)
             );
         }
+
         if (scale.IsActive == true)
         {
             var current = Rect.transform.localScale;
