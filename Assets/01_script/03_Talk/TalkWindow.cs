@@ -105,44 +105,70 @@ public class TalkWindow : MonoBehaviour
     // 現在の右キャラ情報.
     string currentRight = "";
 
+    //  選択肢.
+    [SerializeField] SelectButtonDialog selectButtonDialog = null;
+
     // -----------------------------------------------------------------
     // 会話の開始.
     // -----------------------------------------------------------------
-    public async UniTask TalkStart(List<StoryData> talkList, float wordInterval = 0.05f)
+    public async UniTask<List<int>> TalkStart(List<StoryData> talkList, float wordInterval = 0.05f)
     {
         currentLeft = "";
         currentCenter = "";
         currentRight = "";
 
+        List<int> responseList = new List<int>();
+
         foreach (var talk in talkList)
         {
-            //nameText.text = talk.Name;
-            nameText.text = data.GetCharacterName(talk.Name);
-            talkText.text = "";
-            goToNextPage = false;
-            currentPageCompleted = false;
-            isSkip = false;
-            nextArrow.gameObject.SetActive(false);
-            await SetCharacter(talk);
-
-            await UniTask.Delay((int)(0.5f * 1000f));
-
-            foreach (char word in talk.Talk)
+            // 選択肢の場合.
+            if (talk.Name == "30")
             {
-                talkText.text += word;
-                await UniTask.Delay((int)(wordInterval * 1000f));
+                goToNextPage = false;
+                currentPageCompleted = false;
+                isSkip = false;
+                nextArrow.gameObject.SetActive(false);
+                SetCharacter(talk).Forget();
 
-                if (isSkip == true)
+                string[] arr = talk.Talk.Split(','); // 文字列を「,」で分割
+
+                var res = await selectButtonDialog.CreateButtons(true, arr);
+
+                Debug.Log("Response = " + res);
+                responseList.Add(res);
+
+                goToNextPage = true;
+            }
+            else
+            {
+                //nameText.text = talk.Name;
+                nameText.text = data.GetCharacterName(talk.Name);
+                talkText.text = "";
+                goToNextPage = false;
+                currentPageCompleted = false;
+                isSkip = false;
+                nextArrow.gameObject.SetActive(false);
+                await SetCharacter(talk);
+
+                // await UniTask.Delay((int)(0.5f * 1000f));
+
+                foreach (char word in talk.Talk)
                 {
-                    talkText.text = talk.Talk;
-                    break;
+                    talkText.text += word;
+                    await UniTask.Delay((int)(wordInterval * 700f));
+
+                    if (isSkip == true)
+                    {
+                        talkText.text = talk.Talk;
+                        break;
+                    }
                 }
             }
-
             currentPageCompleted = true;
             nextArrow.gameObject.SetActive(true);
             await UniTask.WaitUntil(() => goToNextPage == true);
         }
+        return responseList;
     }
 
     // -----------------------------------------------------------------
